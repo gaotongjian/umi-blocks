@@ -1,6 +1,7 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { PAGE_NAME_UPPER_CAMEL_CASEApi } from './service';
+import { ConnectState } from '@/models/connect.d'
+import { BLOCK_NAME_CAMEL_CASEApi } from './service';
 
 export interface ISearchData extends ISearchPageData {
   status?: number;
@@ -14,9 +15,13 @@ export interface StateType {
 // 把接口所有参数变为非必填
 export type PartialStateType = Partial<StateType>
 
+// 当前页面可以获取到的model
+// 这里只引入了全局的和当前页面级别的model，还没引入一级page目录级别model
+export type ConnectPageState = ConnectState & { BLOCK_NAME_CAMEL_CASE: PartialStateType }
+
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: PartialStateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: ConnectPageState) => T) => T },
 ) => void;
 
 export interface ModelType {
@@ -31,7 +36,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'PAGE_NAME_UPPER_CAMEL_CASE',
+  namespace: 'BLOCK_NAME_CAMEL_CASE',
 
   state: {
     searchData: {},
@@ -40,7 +45,7 @@ const Model: ModelType = {
 
   effects: {
     *fetchList({ payload }, { call, put }) {
-      const res = yield call(PAGE_NAME_UPPER_CAMEL_CASEApi.index, payload);
+      const res = yield call(BLOCK_NAME_CAMEL_CASEApi.index, payload);
       yield put({ type: 'saveList', payload: Array.isArray(res.data) ? res.data : [] });
       return res;
     },

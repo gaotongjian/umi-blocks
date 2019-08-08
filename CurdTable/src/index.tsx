@@ -1,10 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { StateType, ISearchData } from './model';
-
+import { ConnectProps } from '@/models/connect';
+import { ISearchData, ConnectPageState } from './model';
 import SearchForm from '@/components/SearchForm';
 import useConnectTable from '@/components/SearchForm/useConnectTable';
 import StandardTable from '@/components/StandardTable';
@@ -13,11 +12,10 @@ import { searchSchema } from './schema';
 import styles from './style.less';
 
 const ACTIONS = {
-  FETCH_LIST: 'BLOCK_NAME/fetchList',
+  FETCH_LIST: 'BLOCK_NAME_CAMEL_CASE/fetchList',
 };
 
-interface IProps {
-  dispatch: Dispatch<any>;
+interface IProps extends ConnectProps{
   dataScouce: any[];
   loading: boolean;
   searchData: ISearchData;
@@ -27,13 +25,13 @@ const columns = [
   {
     title: '名称',
     dataIndex: 'name',
-    width: 130,
+    // width: 130,
   },
 
   { title: '创建时间', dataIndex: 'creationTime', width: 170 },
 ];
 
-const BLOCK_NAME: React.FC<IProps> = ({ dataScouce, loading, dispatch, searchData }) => {
+const PAGE_NAME_UPPER_CAMEL_CASE: React.FC<IProps> = ({ dataScouce, loading, dispatch = () => {}, searchData }) => {
   const onFetch = (data: {}) => {
     return dispatch({ type: ACTIONS.FETCH_LIST, payload: data });
   };
@@ -65,20 +63,13 @@ const BLOCK_NAME: React.FC<IProps> = ({ dataScouce, loading, dispatch, searchDat
 
 export default connect(
   ({
-    testOrder,
+    BLOCK_NAME_CAMEL_CASE,
     loading,
-  }: {
-    testOrder: StateType;
-    loading: {
-      effects: {
-        [key: string]: string;
-      };
-    };
-  }) => {
+  }: ConnectPageState) => {
     return {
-      dataScouce: testOrder.list,
-      searchData: testOrder.searchData,
+      dataScouce: BLOCK_NAME_CAMEL_CASE.list,
+      searchData: BLOCK_NAME_CAMEL_CASE.searchData,
       loading: loading.effects[ACTIONS.FETCH_LIST],
     };
   },
-)(BLOCK_NAME);
+)(PAGE_NAME_UPPER_CAMEL_CASE);

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const getMockName = (method: string, path = '') => `${method} /apiROUTE_PATH${path}`
+const getMockName = (method: string, path = '') => `${method} /api/PAGE_NAME_UPPER_CAMEL_CASE${path}`
 const $success = (data: any = {}, msg: string = '') => ({
   data,
   msg,

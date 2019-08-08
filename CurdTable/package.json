@@ -1,5 +1,5 @@
 {
-  "name": "@umi-block/curd-table",
+  "name": "@umi-block/",
   "version": "0.0.1",
   "description": "标准型曾删改查表格。",
   "main": "src/index.js",
@@ -15,7 +15,7 @@
     "react": ">=16.0.0"
   },
   "devDependencies": {
-    "umi": "^2.0.0",
+    "umi": "^2.3.0",
     
     "umi-plugin-block-dev": "^2.0.0",
     "umi-types": "^0.3.0",
