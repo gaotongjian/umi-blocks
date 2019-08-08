@@ -5,7 +5,7 @@
 ## Usage
 
 ```sh
-umi block https://github.com/umijs/umi-blocks/tree/master/{blockName}
+umi block https://github.com/JasonGaotj/umi-blocks/{blockName}
 ```
 
 ## LICENSE
